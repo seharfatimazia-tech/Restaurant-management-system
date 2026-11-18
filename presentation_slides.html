@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gusto POS - Restaurant Management Software Presentation</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        :root {
+            --primary: #e11d48;
+            --primary-glow: rgba(225, 29, 72, 0.35);
+            --bg-dark: #090d16;
+            --card-bg: #111827;
+            --card-border: #1f2937;
+            --text-main: #f9fafb;
+            --text-muted: #9ca3af;
+            --accent-green: #10b981;
+            --accent-blue: #3b82f6;
+            --accent-amber: #f59e0b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Top Bar */
+        .presentation-header {
+            padding: 16px 36px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--card-border);
+            background: rgba(17, 24, 39, 0.6);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+
+        .brand-pill {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .brand-badge {
+            background: linear-gradient(135deg, #e11d48, #be123c);
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: white;
+        }
+
+        .slide-counter {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Slide Container */
+        .slides-viewport {
+            flex-grow: 1;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .slide-frame {
+            display: none;
+            width: 100%;
+            max-width: 1180px;
+            height: 82vh;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 44px 50px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            overflow-y: auto;
+            position: relative;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .slide-frame.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Typography */
+        .slide-tag {
+            color: var(--primary);
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 8px;
+        }
+
+        .slide-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #ffffff, #d1d5db);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .slide-content {
+            flex-grow: 1;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #d1d5db;
+        }
+
+        /* Grid Cards */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 18px;
+            margin-top: 18px;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 20px;
+            transition: all 0.2s ease;
+        }
+
+        .info-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .card-icon {
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+
+        /* Tables */
+        .deck-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+            font-size: 0.95rem;
+        }
+
+        .deck-table th {
+            background: rgba(255, 255, 255, 0.05);
+            text-align: left;
+            padding: 12px 16px;
+            border-bottom: 2px solid var(--card-border);
+            color: white;
+            font-weight: 700;
+        }
+
+        .deck-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--card-border);
+            color: #d1d5db;
+        }
+
+        /* Diagrams */
+        .diagram-box {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: #58a6ff;
+            overflow-x: auto;
+            margin-top: 14px;
+        }
+
+        /* Flow Badges */
+        .flow-pill {
+            display: inline-flex;
+            align-items: center;
+            background: #1f2937;
+            padding: 8px 14px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin: 4px;
+        }
+
+        /* Controls Bottom Bar */
+        .presentation-footer {
+            padding: 16px 36px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--card-border);
+            background: rgba(17, 24, 39, 0.6);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-btn {
+            background: #1f2937;
+            color: white;
+            border: 1px solid var(--card-border);
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            background: #1f2937 !important;
+            border-color: var(--card-border) !important;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="presentation-header">
+        <div class="brand-pill">
+            <span class="brand-badge"><i class="fa-solid fa-utensils"></i> GUSTO POS</span>
+            <span>DBMS Technical Defense</span>
+        </div>
+        <div class="slide-counter" id="slideCounter">Slide 1 / 14</div>
+    </header>
+
+    <!-- Main Slide Viewport -->
+    <main class="slides-viewport">
+
+        <!-- SLIDE 1: Title -->
+        <div class="slide-frame active" id="slide-1">
+            <div>
+                <span class="slide-tag">DBMS Course Project Defense</span>
+                <h1 class="slide-title">Restaurant Management & Delivery Desktop Software</h1>
+                <div class="slide-content">
+                    <p style="font-size: 1.25rem; margin-bottom: 24px; color: #9ca3af;">
+                        An enterprise-grade, offline-capable desktop POS and operations system with 100% normalized relational architecture, atomic recipe deductions, and role-based access control.
+                    </p>
+                    <div class="cards-grid">
+                        <div class="info-card">
+                            <i class="fa-solid fa-database card-icon text-danger" style="color: #e11d48;"></i>
+                            <h4 style="margin-bottom: 6px;">Relational DBMS</h4>
+                            <p class="text-muted" style="font-size: 0.9rem;">21 tables in 3NF & BCNF using SQLite and SQLAlchemy ORM.</p>
+                        </div>
+                        <div class="info-card">
+                            <i class="fa-solid fa-desktop card-icon" style="color: #3b82f6;"></i>
+                            <h4 style="margin-bottom: 6px;">Desktop Software</h4>
+                            <p class="text-muted" style="font-size: 0.9rem;">Native desktop window, offline execution, 1-click batch launcher.</p>
+                        </div>
+                        <div class="info-card">
+                            <i class="fa-solid fa-shield-halved card-icon" style="color: #10b981;"></i>
+                            <h4 style="margin-bottom: 6px;">6-Role RBAC</h4>
+                            <p class="text-muted" style="font-size: 0.9rem;">Admin, Manager, Cashier, Waiter, Chef, and Delivery Rider.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="font-size: 0.85rem; color: #6b7280; padding-top: 14px; border-top: 1px solid var(--card-border);">
+                Tech Stack: Python (Flask), SQLAlchemy, SQLite, HTML5, CSS3, JavaScript, pywebview
+            </div>
+        </div>
+
+        <!-- SLIDE 2: Architecture -->
+        <div class="slide-frame" id="slide-2">
+            <div>
+                <span class="slide-tag">System Design</span>
+                <h2 class="slide-title">Three-Tier Architecture</h2>
+                <div class="slide-content">
+                    <div class="diagram-box">
++-----------------------------------------------------------------------------------+
+| FRONTEND TIER (Client Window)                                                     |
+| • Desktop Window (pywebview / Standalone Chromium App Mode)                      |
+| • Templates (login.html, index.html) + Styling (style.css) + Controller (app.js)  |
++-----------------------------------------------------------------------------------+
+                                        │
+                                        │ JSON API Requests (GET, POST, PUT, DELETE)
+                                        ▼
++-----------------------------------------------------------------------------------+
+| BACKEND TIER (Python / Flask - app.py)                                            |
+| • RESTful API Endpoints & Session Manager                                         |
+| • Role Authorization Decorator (@role_required)                                   |
+| • Business Logic Engine (Atomic Stock Deduction, Payment & Booking Gates)         |
++-----------------------------------------------------------------------------------+
+                                        │
+                                        │ SQLAlchemy ORM Mappings
+                                        ▼
++-----------------------------------------------------------------------------------+
+| DATABASE TIER (SQLite - restaurant.db)                                            |
+| • 21 Normalized Relations (3NF / BCNF) with Foreign Keys & Check Constraints       |
+| • Immutable Ledger Tables (stock_transaction, audit_log)                          |
++-----------------------------------------------------------------------------------+
+                    </div>
+                </div>
+            </div>
+            <div style="font-size: 0.85rem; color: #6b7280;">Clean separation of concerns: Presentation, Logic, and Persistence layers.</div>
+        </div>
+
+        <!-- SLIDE 3: The Frontend -->
+        <div class="slide-frame" id="slide-3">
+            <div>
+                <span class="slide-tag">Layer 1</span>
+                <h2 class="slide-title">The Frontend Layer (UI & Client Logic)</h2>
+                <div class="slide-content">
+                    <p>The visual presentation layer built using modern web standards running inside a native desktop frame:</p>
+                    <div class="cards-grid" style="margin-top: 16px;">
+                        <div class="info-card">
+                            <h4 style="color: #e11d48; margin-bottom: 8px;"><i class="fa-solid fa-code me-2"></i> HTML5 Templates</h4>
+                            <p style="font-size: 0.9rem;"><code>templates/login.html</code> and <code>templates/index.html</code> define all 14 interactive software views, floor grids, and modal dialogs.</p>
+                        </div>
+                        <div class="info-card">
+                            <h4 style="color: #3b82f6; margin-bottom: 8px;"><i class="fa-solid fa-palette me-2"></i> CSS3 POS Styling</h4>
+                            <p style="font-size: 0.9rem;"><code>static/css/style.css</code> provides sleek dark-mode navigation, KDS ticket cards, seating color codes, and thermal receipt formats.</p>
+                        </div>
+                        <div class="info-card">
+                            <h4 style="color: #10b981; margin-bottom: 8px;"><i class="fa-brands fa-js me-2"></i> JavaScript Controller</h4>
+                            <p style="font-size: 0.9rem;"><code>static/js/app.js</code> manages live shopping carts, real-time ticket polling, client-side validation, and role-based element filtering.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="font-size: 0.85rem; color: #6b7280;">Runs with zero browser address bars or navigation clutter.</div>
+        </div>
+
+        <!-- SLIDE 4: The Backend -->
+        <div class="slide-frame" id="slide-4">
+            <div>
+                <span class="slide-tag">Layer 2</span>
+                <h2 class="slide-title">The Backend Layer (Python / Flask Engine)</h2>
+                <div class="slide-content">
+                    <p>The centralized logic processor in <code>app.py</code> and desktop launcher in <code>main.py</code>:</p>
+                    <div class="cards-grid" style="margin-top: 16px;">
+                        <div class="info-card">
+                            <h4 style="color: #e11d48; margin-bottom: 8px;">REST API Controller</h4>
+                            <p style="font-size: 0.9rem;">Processes asynchronous HTTP requests from the frontend and returns standardized JSON payloads.</p>
+                        </div>
+                        <div class="info-card">
+                            <h4 style="color: #f59e0b; margin-bottom: 8px;">Security & Hashing</h4>
+                            <p style="font-size: 0.9rem;">Enforces salted SHA-256 password hashing (<code>generate_password_hash</code>). Passwords are never stored in plain text.</p>
+                        </div>
+                        <div class="info-card">
+                            <h4 style="color: #10b981; margin-bottom: 8px;">Transaction Integrity</h4>
+                            <p style="font-size: 0.9rem;">Manages atomic multi-table commits and automatic rollback on failure to maintain database consistency.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="font-size: 0.85rem; color: #6b7280;">Guarantees ACID database properties on all financial and inventory operations.</div>
+        </div>
+
+        <!-- SLIDE 5: REST APIs -->
+        <div class="slide-frame" id="slide-5">
+            <div>
+                <span class="slide-tag">Data Communication</span>
+                <h2 class="slide-title">What Are REST APIs & How Data Moves</h2>
+                <div class="slide-content">
+                    <p>APIs (Application Programming Interfaces) bridge the Frontend and Backend using standard HTTP verbs:</p>
+                    <table class="deck-table">
+                        <thead>
+                            <tr>
+                                <th>Method</th>
+                                <th>Endpoint Route</th>
+                                <th>Payload / Action</th>
+                                <th>DBMS Impact</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span style="color: #10b981; font-weight: 700;">POST</span></td>
+                                <td><code>/api/orders</code></td>
+                                <td>Order items, type, table/customer</td>
+                                <td>Inserts <code>orders</code>, <code>order_item</code>, and <code>bill</code></td>
+                            </tr>
+                            <tr>
+                                <td><span style="color: #3b82f6; font-weight: 700;">PUT</span></td>
+                                <td><code>/api/orders/&lt;id&gt;/status</code></td>
+                                <td>New status ('Completed')</td>
+                                <td>Deducts raw stock via recipes; frees table</td>
+                            </tr>
+                            <tr>
+                                <td><span style="color: #10b981; font-weight: 700;">POST</span></td>
+                                <td><code>/api/bills/&lt;id&gt;/pay</code></td>
+                                <td>Amount, method (Card/Cash)</td>
+                                <td>Enforces payment &le; balance; updates status</td>
+                            </tr>
+                            <tr>
+                                <td><span style="color: #f59e0b; font-weight: 700;">PUT</span></td>
+                                <td><code>/api/delivery/&lt;id&gt;/status</code></td>
+                                <td>Status ('Out for delivery')</td>
+                                <td>Advances pipeline; logs trip metrics</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div style="font-size: 0.85rem; color: #6b7280;">All requests carry session cookies for role verification.</div>
+        </div>
+
+        <!-- SLIDE 6: Primary & Foreign Keys -->
+        <div class="slide-frame" id="slide-6">
+            <div>
+                <span class="slide-tag">DBMS Foundations</span>
+                <h2 class="slide-title">Primary Keys & Foreign Keys in Action</h2>
+                <div class="slide-content">
+                    <div class="cards-grid" style="margin-bottom: 16px;">
+                        <div class="info-card">
+                            <h4 style="color: #e11d48; margin-bottom: 6px;">Primary Key (PK)</h4>
+                            <p style="font-size: 0.9rem;">Uniquely identifies each record. Always unique and non-null (e.g. <code>customer.id</code>, <code>orders.id</code>).</p>
+                        </div>
+                        <div class="info-card">
+                            <h4 style="color: #3b82f6; margin-bottom: 6px;">Foreign Key (FK)</h4>
+                            <p style="font-size: 0.9rem;">References a PK in another table to enforce Referential Integrity (e.g. <code>address.customer_id</code> &rarr; <code>customer.id</code>).</p>
+                        </div>
+                    </div>
+                    <div class="diagram-box">
+[CUSTOMER] PK: id = 101 (Emily Watson)
+      │
+      └───< [ADDRESS] PK: id = 501, FK: customer_id = 101, FK: delivery_zone_id = 2
+                 │
+                 └───< [DELIVERY] PK: id = 701, FK: address_id = 501, FK: rider_id = 6
+                    </div>
+                </div>
+            </div>
+            <div style="font-size: 0.85rem; color: #6b7280;">Foreign key constraints prevent orphaned records and enforce real-world business links.</div>
+        </div>
+
+        <!-- SLIDE 7: Normalization -->
+        <div class="slide-frame" id="slide-7">
+            <div>
+                <span class="slide-tag">Database Normalization</span>
+                <h2 class="slide-title">Meeting 3NF & BCNF Standards</h2>
+                <div class="slide-content">
+                    <div class="cards-grid">
+                        <div class="info-card">
+                            <h4 style="color: #e11d48; margin-bottom: 6px;">1NF (Atomicity)</h4>
+                            <p style="font-size: 0.9rem;">Every field holds an atomic single value. Ordered items are separated into child rows in <code>order_item</code>.</p>
+                        </div>
+                        <div class="info-card">
+                            <h4 style="color: #3b82f6; margin-bottom: 6px;">2NF (No Partial Dep.)</h4>
+                            <p style="font-size: 0.9rem;">In composite associative tables like <code>recipe(menu_item_id, ingredient_id)</code>, required quantity depends on both keys.</p>
+                        </div>
+                        <div class="info-card">
+                            <h4 style="color: #10b981; margin-bottom: 6px;">3NF (No Transitive Dep.)</h4>
+                            <p style="font-size: 0.9rem;">Auth credentials (<code>user_account</code>) are isolated from employee profiles (<code>staff</code>). Historical order prices are immutable.</p>
+                        </div>
+                        <div class="info-card">
+                            <h4 style="color: #f59e0b; margin-bottom: 6px;">BCNF (Superkeys)</h4>
+                            <p style="font-size: 0.9rem;">Every non-trivial functional dependency X &rarr; Y has X as a superkey with explicit database UNIQUE constraints.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="font-size: 0.85rem; color: #6b7280;">Prevents insertion, deletion, and update anomalies across all 21 models.</div>
+        </div>
+
+        <!-- SLIDE 8: User Roles -->
+        <div class="slide-frame" id="slide-8">
+            <div>
+                <span class="slide-tag">Access Governance</span>
+                <h2 class="slide-title">Who Are the Users? (6 Specialized Roles)</h2>
+                <div class="slide-content">
+                    <table class="deck-table">
+                        <thead>
+                            <tr>
+                                <th>Role</th>
+                                <th>Primary Operational Responsibilities</th>
+                                <th>System Permissions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="flow-pill" style="border: 1px solid #ef4444; color: #ef4444;">Admin</span></td>
+                                <td>System Owner, Auditor, IT Administrator</td>
+                                <td>Full access, staff account creation, system backup export</td>
+                            </tr>
+                            <tr>
+                                <td><span class="flow-pill" style="border: 1px solid #3b82f6; color: #3b82f6;">Manager</span></td>
+                                <td>Store General Manager, Inventory Controller</td>
+                                <td>Catalog editing, purchase orders, restocks, financial reports</td>
+                            </tr>
+                            <tr>
+                                <td><span class="flow-pill" style="border: 1px solid #10b981; color: #10b981;">Cashier</span></td>
+                                <td>Front-of-House Cashier, Order Taker</td>
+                                <td>POS order entry, customer invoices, payment recording</td>
+                            </tr>
+                            <tr>
+                                <td><span class="flow-pill" style="border: 1px solid #f59e0b; color: #f59e0b;">Waiter</span></td>
+                                <td>Dining Room Server</td>
+                                <td>Table bookings, seating guests, Dine-in tickets</td>
+                            </tr>
+                            <tr>
+                                <td><span class="flow-pill" style="border: 1px solid #f97316; color: #f97316;">Chef</span></td>
+                                <td>Kitchen Head, Line Cook</td>
+                                <td>Kitchen Display Screen (KDS), dish recipe inspections</td>
+                            </tr>
+                            <tr>
+                                <td><span class="flow-pill" style="border: 1px solid #a855f7; color: #a855f7;">Delivery Rider</span></td>
+                                <td>Field Delivery Courier</td>
+                                <td>Personal delivery portal, trip status updates</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div style="font-size: 0.85rem; color: #6b7280;">RBAC enforced at both UI presentation and backend API level.</div>
+        </div>
+
+        <!-- SLIDE 9: Workflow 1 - Orders -->
+        <div class="slide-frame" id="slide-9">
+            <div>
+                <span class="slide-tag">Operational Workflow 1</span>
+                <h2 class="slide-title">The Dine-In & POS Order Lifecycle</h2>
+                <div class="slide-content">
+                    <div class="diagram-box">
+1. TABLE SELECTION
+   Waiter selects Available table (e.g. Table T-04) from live visual floor plan.
+         │
+         ▼
+2. DISH COMPOSITION
+   Items added to dynamic cart. Subtotal calculated; 8% tax computed automatically.
+         │
+         ▼
+3. ATOMIC CREATION (POST /api/orders)
+   • orders row inserted (status='Pending')
+   • order_item child rows inserted with historical unit prices
+   • bill invoice generated with calculated balance
+   • dining_table status updated from 'Available' to 'Occupied'
+         │
+         ▼
+4. KITCHEN ROUTING
+   Ticket instantly appears on the Chef's Kitchen Display System (KDS).
+                    </div>
+                </div>
+            </div>
+            <div style="font-size: 0.85rem; color: #6b7280;">Prevents duplicate table occupancy and ensures instant order dispatch.</div>
+        </div>
+
+        <!-- SLIDE 10: Workflow 2 - Kitchen KDS -->
+        <div class="slide-frame" id="slide-10">
+            <div>
+                <span class="slide-tag">Operational Workflow 2</span>
+                <h2 class="slide-title">Kitchen Display System (KDS) Screen</h2>
+                <div class="slide-content">
+                    <p>Replaces paper kitchen tickets with real-time digital ticket management for the Chef:</p>
+                    <div class="cards-grid" style="margin-top: 18px;">
+                        <div class="info-card">
+                            <span class="flow-pill" style="color: #6b7280;">Step 1: Ticket Queued</span>
+                            <p style="font-size: 0.9rem; margin-top: 8px;">Order arrives in 'Pending' status showing elapsed prep timer and special preparation notes.</p>
+                        </div>
+                        <div class="info-card">
+                            <span class="flow-pill" style="color: #f59e0b;">Step 2: Start Cooking</span>
+                            <p style="font-size: 0.9rem; margin-top: 8px;">Chef clicks 'Cook' &rarr; item status transitions to 'Preparing'; order transitions to 'In-Progress'.</p>
+                        </div>
+                        <div class="info-card">
+                            <span class="flow-pill" style="color: #10b981;">Step 3: Mark Ready</span>
+                            <p style="font-size: 0.9rem; margin-top: 8px;">Chef finishes preparation &rarr; marks dish 'Ready'; waiter or courier notified for immediate service.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="font-size: 0.85rem; color: #6b7280;">Ensures timely food preparation and prevents ticket losses.</div>
+        </div>
+
+        <!-- SLIDE 11: Workflow 3 - Atomic Stock Deduction -->
+        <div class="slide-frame" id="slide-11">
+            <div>
+                <span class="slide-tag">Operational Workflow 3</span>
+                <h2 class="slide-title">Atomic Inventory Depletion via Recipes</h2>
+                <div class="slide-content">
+                    <p><b style="color: #e11d48;">Core DBMS Rule:</b> When an order is completed, raw ingredients must be deducted according to the Bill of Materials (BOM) in a <b>single atomic transaction</b>.</p>
+                    <div class="diagram-box">
+Order #ORD-1001 Completed (2x Margherita Pizza)
+  │
+  ├── Dish Recipe: Pizza Dough (0.25 kg), Mozzarella (0.20 kg), Sauce (0.15 L)
+  │
+  └── [ATOMIC COMMIT BLOCK]
+       1. Deduct: 0.50 kg Pizza Dough from ingredient.current_stock
+       2. Deduct: 0.40 kg Mozzarella from ingredient.current_stock
+       3. Deduct: 0.30 L Tomato Sauce from ingredient.current_stock
+       4. Write 3 negative signed entries to stock_transaction ledger
+       5. Release dining table to 'Available'
+       6. Record event in audit_log
+                    </div>
+                </div>
+            </div>
+            <div style="font-size: 0.85rem; color: #6b7280;">If any deduction step fails, the entire transaction rolls back cleanly.</div>
+        </div>
+
+        <!-- SLIDE 12: Workflow 4 - Delivery Pipeline -->
+        <div class="slide-frame" id="slide-12">
+            <div>
+                <span class="slide-tag">Operational Workflow 4</span>
+                <h2 class="slide-title">Delivery Dispatch & Rider Pipeline</h2>
+                <div class="slide-content">
+                    <p>Enforces strict sequential lifecycle progression for delivery orders:</p>
+                    <div style="margin: 20px 0; text-align: center;">
+                        <span class="flow-pill" style="color: #9ca3af;">Pending</span> &rarr;
+                        <span class="flow-pill" style="color: #3b82f6;">Assigned (Rider Selected)</span> &rarr;
+                        <span class="flow-pill" style="color: #f59e0b;">Out for delivery</span> &rarr;
+                        <span class="flow-pill" style="color: #10b981;">Delivered</span>
+                    </div>
+                    <div class="cards-grid">
+                        <div class="info-card">
+                            <h4 style="color: #e11d48; margin-bottom: 6px;">Zone Minimums</h4>
+                            <p style="font-size: 0.9rem;">Cart total must exceed <code>zone.min_order_amount</code>, or order is rejected.</p>
+                        </div>
+                        <div class="info-card">
+                            <h4 style="color: #3b82f6; margin-bottom: 6px;">Fee Inclusion</h4>
+                            <p style="font-size: 0.9rem;"><code>delivery_zone.delivery_fee</code> is bound directly into the customer's bill total.</p>
+                        </div>
+                        <div class="info-card">
+                            <h4 style="color: #10b981; margin-bottom: 6px;">Courier Privacy</h4>
+                            <p style="font-size: 0.9rem;">Riders only see trips explicitly assigned to their employee account.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="font-size: 0.85rem; color: #6b7280;">Actual delivery timestamp is recorded upon completion for driver KPI analytics.</div>
+        </div>
+
+        <!-- SLIDE 13: Workflow 5 - Billing & Constraints -->
+        <div class="slide-frame" id="slide-13">
+            <div>
+                <span class="slide-tag">Operational Workflow 5</span>
+                <h2 class="slide-title">Billing, Payments & Constraints</h2>
+                <div class="slide-content">
+                    <p><b style="color: #e11d48;">Core DBMS Rule:</b> Payment amount cannot exceed current bill balance.</p>
+                    <div class="diagram-box">
+Bill #BILL-1002 ──> Total: $51.84 | Paid: $0.00 | Remaining Balance: $51.84
+
+Scenario A: Cashier enters $60.00 Payment
+  └── Check: $60.00 > $51.84
+  └── RESULT: [HTTP 400 Bad Request] Rejected by backend constraint check!
+
+Scenario B: Cashier enters $51.84 Payment (or Partial $30.00)
+  └── Check: Valid &le; Remaining Balance
+  └── RESULT: [HTTP 201 Created] Payment row written; balance becomes $0.00 (Status: 'Paid')
+                    </div>
+                </div>
+            </div>
+            <div style="font-size: 0.85rem; color: #6b7280;">Eliminates negative ledger balances and accounting discrepancies.</div>
+        </div>
+
+        <!-- SLIDE 14: Summary & Q&A -->
+        <div class="slide-frame" id="slide-14">
+            <div>
+                <span class="slide-tag">Conclusion</span>
+                <h2 class="slide-title">Summary & Technical Achievements</h2>
+                <div class="slide-content">
+                    <div class="cards-grid">
+                        <div class="info-card">
+                            <h4 style="color: #10b981; margin-bottom: 6px;"><i class="fa-solid fa-check-circle me-1"></i> Standalone Software</h4>
+                            <p style="font-size: 0.9rem;">Operates as a true desktop application on Windows with a 1-click launcher.</p>
+                        </div>
+                        <div class="info-card">
+                            <h4 style="color: #e11d48; margin-bottom: 6px;"><i class="fa-solid fa-check-circle me-1"></i> Strict Normalization</h4>
+                            <p style="font-size: 0.9rem;">3NF/BCNF relational integrity across 21 tables via SQLAlchemy ORM.</p>
+                        </div>
+                        <div class="info-card">
+                            <h4 style="color: #3b82f6; margin-bottom: 6px;"><i class="fa-solid fa-check-circle me-1"></i> Real-World Workflows</h4>
+                            <p style="font-size: 0.9rem;">POS, live kitchen display, delivery pipeline, and automated recipe deductions.</p>
+                        </div>
+                        <div class="info-card">
+                            <h4 style="color: #f59e0b; margin-bottom: 6px;"><i class="fa-solid fa-check-circle me-1"></i> Full Traceability</h4>
+                            <p style="font-size: 0.9rem;">Immutable stock ledger and audit trail with 1-click database backup snapshots.</p>
+                        </div>
+                    </div>
+                    <div style="text-align: center; margin-top: 36px;">
+                        <h3 style="font-size: 1.6rem; color: white;">Thank You! Questions & Live Demo</h3>
+                    </div>
+                </div>
+            </div>
+            <div style="font-size: 0.85rem; color: #6b7280;">Gusto POS - Enterprise Restaurant Management System</div>
+        </div>
+
+    </main>
+
+    <!-- Footer Navigation Controls -->
+    <footer class="presentation-footer">
+        <button class="nav-btn" id="prevBtn" onclick="prevSlide()" disabled>
+            <i class="fa-solid fa-chevron-left"></i> Previous
+        </button>
+        <div style="display: flex; gap: 8px;">
+            <button class="nav-btn" onclick="toggleFullscreen()">
+                <i class="fa-solid fa-expand"></i> Fullscreen
+            </button>
+            <button class="nav-btn" onclick="window.print()">
+                <i class="fa-solid fa-file-pdf"></i> Save as PDF / Slides
+            </button>
+        </div>
+        <button class="nav-btn" id="nextBtn" onclick="nextSlide()">
+            Next <i class="fa-solid fa-chevron-right"></i>
+        </button>
+    </footer>
+
+    <!-- Interactive Slide Script -->
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 14;
+
+        function updateSlideUI() {
+            document.querySelectorAll('.slide-frame').forEach((s, idx) => {
+                if (idx + 1 === currentSlide) {
+                    s.classList.add('active');
+                } else {
+                    s.classList.remove('active');
+                }
+            });
+
+            document.getElementById('slideCounter').textContent = `Slide ${currentSlide} / ${totalSlides}`;
+            document.getElementById('prevBtn').disabled = (currentSlide === 1);
+            document.getElementById('nextBtn').disabled = (currentSlide === totalSlides);
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides) {
+                currentSlide++;
+                updateSlideUI();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 1) {
+                currentSlide--;
+                updateSlideUI();
+            }
+        }
+
+        // Keyboard arrows navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                prevSlide();
+            }
+        });
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+    </script>
+</body>
+</html>
